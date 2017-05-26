@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import { createPost } from '../actions';
 
 class PostsNew extends Component {
 	
@@ -18,7 +21,7 @@ class PostsNew extends Component {
 		);
 	}
 	onSubmit(values) {
-		console.log(values);
+		this.props.createPost(values);
 	}
 
 	render() {
@@ -42,6 +45,7 @@ class PostsNew extends Component {
 					component={this.renderField}
 				/>
 				<button type="submit" className="btn btn-primary">Submit</button>
+				<Link to="/" className="btn btn-danger">Cancel</Link>
 			</form>
 		);
 	}
@@ -65,4 +69,6 @@ export default reduxForm({
 	//validate: validate
 	validate,
 	form: 'PostsNewForm'
- })(PostsNew);
+ })(
+ 	connect(null, { createPost })(PostsNew)
+ );
